@@ -49,7 +49,7 @@ public class UsuarioController {
 		}
 	}
 	
-	@GetMapping("/usuario/nombre")
+	@GetMapping("/usuario/rfc")
 	public ResponseEntity<Response> getByRFC(@RequestParam String rfc) {
 		try {
 			Object response = service.getUsuarioRFC(rfc);
