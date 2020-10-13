@@ -43,18 +43,16 @@ public class PagosController {
 			Object response = service.getPagosId(id);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
-
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
 	
-	@GetMapping("/pagos/factura")
-	public ResponseEntity<Response> getByFactura(@RequestParam String factura) {
+	@GetMapping("/pagos/pago")
+	public ResponseEntity<Response> getByPago(@RequestParam String factura) {
 		try {
 			Object response = service.getPagosFolio(factura);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
-
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
@@ -64,7 +62,6 @@ public class PagosController {
 			Object response = service.getPagosRfc(rfc);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
-
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}

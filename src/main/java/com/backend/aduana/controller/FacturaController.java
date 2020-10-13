@@ -48,7 +48,7 @@ public class FacturaController {
 		}
 	}
 	
-	@GetMapping("/facturas/folio")
+	@GetMapping("/facturas/factura")
 	public ResponseEntity<Response> getByFactura(@RequestParam String folio) {
 		try {
 			Object response = service.getFacturaFolio(folio);

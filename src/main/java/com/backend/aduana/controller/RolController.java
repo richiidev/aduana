@@ -33,7 +33,6 @@ public class RolController {
 			Object response = service.getAll();
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
-
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
@@ -44,7 +43,6 @@ public class RolController {
 			Object response = service.getRolId(id);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
-
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
@@ -61,7 +59,6 @@ public class RolController {
 		}
 	}
 	
-	
 	// api para eliminar
 		@DeleteMapping("/rol/id")
 		public ResponseEntity<Response> deleteByID(@RequestParam("id") int id) {
@@ -70,7 +67,6 @@ public class RolController {
 				service.deleteById(id);
 				return new ResponseEntity<Response>(new Response(true, "Success Eliminado", response), HttpStatus.OK);
 			} catch (Exception e) {
-
 				return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 			}
 		}
@@ -82,7 +78,6 @@ public class RolController {
 				this.service.saveRol(rol);
 				Response response = new Response(true, "Success!", rol);
 				return new ResponseEntity<Response>(response, HttpStatus.OK);
-
 			} catch (Exception e) {
 				Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
 				return new ResponseEntity<Response>(response, HttpStatus.OK);
@@ -96,7 +91,6 @@ public class RolController {
 				this.service.updateRol(rol);
 				Response response = new Response(true, "Success!", rol);
 				return new ResponseEntity<Response>(response, HttpStatus.OK);
-
 			} catch (Exception e) {
 				Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
 				return new ResponseEntity<Response>(response, HttpStatus.OK);
