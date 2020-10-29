@@ -26,9 +26,6 @@ import io.swagger.annotations.Api;
 @Api(tags = "file")
 public class UploadFileController {
 	
-	 String zipFile = "/home/richiidev/Documentos/facturaspdfxml/ejemploConApi.zip";
-     String url;
-     String[] srcFiles = {};
       
 
 	 @Autowired
@@ -50,7 +47,7 @@ public class UploadFileController {
 	    }
        
 	    @PostMapping("zip")
-	    public String convertirZip(@RequestParam String[] srcFiles) {
+	    public String convertirZip(@RequestParam String zipFile,@RequestParam String[] srcFiles) {
 	    	try {
 	             
 	            // create byte buffer
