@@ -16,4 +16,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Serializable> {
 	
 	@Query(value = "Select * from usuario where rfc = ? and password = ?;", 
 			nativeQuery = true) List<Usuario> getUserpasswordRFC(String rfc, String password);
+	
+	@Query(value = " UPDATE usuario SET apellidos = ?, correo =? where id = ?; ", 
+			nativeQuery = true) List<Usuario> updateUsuario(String rfc, String password);
 }

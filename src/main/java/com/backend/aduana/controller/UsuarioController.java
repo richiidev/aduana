@@ -60,6 +60,22 @@ public class UsuarioController {
 		}
 	}
 	
+	@GetMapping("/usuario/rfcValidacion")
+	public ResponseEntity<Response> getByRFCExiste(@RequestParam String rfc) {
+		try {
+			service.getUsuarioRFC(rfc);
+				
+				return new ResponseEntity<Response>(new Response(true, "Success", "existe"), HttpStatus.OK);			 
+
+			
+			
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	
 	@GetMapping("/usuario/login")
 	public ResponseEntity<Response> getByRFAndPassword(@RequestParam String rfc,@RequestParam String password) {
 		try {
