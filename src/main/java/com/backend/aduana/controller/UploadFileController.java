@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,23 @@ public class UploadFileController {
 	        }
 
             return new ResponseEntity<Response>(new Response(true,"archivo cargado",null), HttpStatus.OK);
+	    }
+	    
+	    @GetMapping("borrarArchivo")
+	    public ResponseEntity<Response> borrarFile(@RequestParam String url){
+	    	try {
+	    		File fichero = new File(url);
+		    	if (fichero.delete())
+		    		return new ResponseEntity<Response>(new Response(true, "Success", "El fichero ha sido borrado satisfactoriamente"), HttpStatus.OK);	
+		    		else
+		    			return new ResponseEntity<Response>(new Response(true, "Success", "El fichero no se pudo borrar"), HttpStatus.OK);							 
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+
+			}
+	    	
 	    }
        
 	    @PostMapping("zip")
