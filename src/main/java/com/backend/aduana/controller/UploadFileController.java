@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -35,16 +38,34 @@ public class UploadFileController {
 	    @PostMapping("upload")
 	    public ResponseEntity<Response> uploadFile(@RequestParam("file") MultipartFile file) {
 	        if (file.isEmpty()) {
-	            return new ResponseEntity<Response>(new Response(true,"archivo cargado",null), HttpStatus.OK);
+	            return new ResponseEntity<Response>(new Response(true,"Success","archivo cargado"), HttpStatus.OK);
 	        }
-
 	        try {
 	            uploadFileService.saveFile(file);
 	        } catch (IOException e) {
 	            e.printStackTrace();
+	            
 	        }
+            return new ResponseEntity<Response>(new Response(true,"Success","archivo cargado"), HttpStatus.OK);	        
 
-            return new ResponseEntity<Response>(new Response(true,"archivo cargado",null), HttpStatus.OK);
+	    }
+	    @GetMapping("descarga")
+	    public ResponseEntity<Response> descargarArchivo(@RequestParam String archivo,@RequestParam String ubicacion ) throws IOException{
+	    	System.out.println("opening connection");
+			URL url = new URL(archivo);
+			InputStream in = url.openStream();
+			FileOutputStream fos = new FileOutputStream(new File(ubicacion));
+
+			System.out.println("reading from resource and writing to file...");
+			int length = -1;
+			byte[] buffer = new byte[1024];// buffer for portion of data from connection
+			while ((length = in.read(buffer)) > -1) {
+			       fos.write(buffer, 0, length);
+			}
+			fos.close();
+			in.close();
+			System.out.println("File downloaded");
+			return new ResponseEntity<Response>(new Response(true, "Success", "File downloaded"), HttpStatus.OK);							 
 	    }
 	    
 	    @GetMapping("borrarArchivo")
@@ -59,9 +80,7 @@ public class UploadFileController {
 			} catch (Exception e) {
 				// TODO: handle exception
 				return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
-
-			}
-	    	
+			}  	
 	    }
        
 	    @PostMapping("zip")

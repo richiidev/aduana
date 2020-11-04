@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadFileService {
 
-	 private String upload_folder = ".//src//main//resources//files//";
+	 private String upload_folder = ".//src//main//webapp//file//";
 
 	    public void saveFile(MultipartFile file) throws IOException {
 	        if(!file.isEmpty()){
@@ -20,4 +20,6 @@ public class UploadFileService {
 	            Files.write(path,bytes);
 	        }
 	    }
+	    
+	    
 }
