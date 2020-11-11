@@ -11,10 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadFileService {
 
-	 private String upload_folder = ".//src//main//webapp//file//";
+	 private String upload_folder = "/home/ftp/polar/";
 
 	    public void saveFile(MultipartFile file) throws IOException {
-	        if(!file.isEmpty()){
+	        if(!file.isEmpty()){ 
 	            byte[] bytes = file.getBytes();
 	            Path path = Paths.get(upload_folder + file.getOriginalFilename());
 	            Files.write(path,bytes);
