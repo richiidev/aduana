@@ -58,6 +58,16 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
+	@GetMapping("/facturas/paginas")
+	public ResponseEntity<Response> getByPaginas(@RequestParam int rango1,@RequestParam int rango2) {
+		try {
+			Object response = service.getPaginasFactura(rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
 	
 	@GetMapping("/facturas/rfc")
 	public ResponseEntity<Response> getByRfc(@RequestParam String rfc) {
@@ -69,6 +79,17 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
+	@GetMapping("/facturas/agente")
+	public ResponseEntity<Response> getByAgente(@RequestParam String agente) {
+		try {
+			Object response = service.getFacturasByAgente(agente);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	
 	
 	
 		@DeleteMapping("/facturas/id")

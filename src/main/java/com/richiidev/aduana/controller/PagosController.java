@@ -25,7 +25,7 @@ public class PagosController {
 
 	@Autowired
 	PagosService service;
-	
+
 	@GetMapping("/pagos")
 	public ResponseEntity<Response> getAll() {
 		try {
@@ -36,7 +36,7 @@ public class PagosController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
+
 	@GetMapping("/pagos/id")
 	public ResponseEntity<Response> getByID(@RequestParam int id) {
 		try {
@@ -46,7 +46,7 @@ public class PagosController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
+
 	@GetMapping("/pagos/pago")
 	public ResponseEntity<Response> getByPago(@RequestParam String factura) {
 		try {
@@ -65,44 +65,52 @@ public class PagosController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
-	
-		@DeleteMapping("/pagos/id")
-		public ResponseEntity<Response> deleteByID(@RequestParam("id") int id) {
-			try {
-				Object response = service.getPagosId(id);
-				service.deleteById(id);
-				return new ResponseEntity<Response>(new Response(true, "Success Eliminado", response), HttpStatus.OK);
-			} catch (Exception e) {
 
-				return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
-			}
+	@GetMapping("/pagos/agente")
+	public ResponseEntity<Response> getByAgente(@RequestParam String agente) {
+		try {
+			Object response = service.getPagosAgente(agente);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
-		
-		@PostMapping("/pagos")
-		public ResponseEntity<Response> add(@RequestBody Pagos pagos) {
-			try {
-				this.service.save(pagos);
-				Response response = new Response(true, "Success!", pagos);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
+	}
+	@DeleteMapping("/pagos/id")
+	public ResponseEntity<Response> deleteByID(@RequestParam("id") int id) {
+		try {
+			Object response = service.getPagosId(id);
+			service.deleteById(id);
+			return new ResponseEntity<Response>(new Response(true, "Success Eliminado", response), HttpStatus.OK);
+		} catch (Exception e) {
 
-			} catch (Exception e) {
-				Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
-			}
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
+	}
 
-		@PutMapping("/pagos")
-		public ResponseEntity<Response> update(@RequestBody Pagos pagos) {
-			try {
-				this.service.update(pagos);
-				Response response = new Response(true, "Success!", pagos);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
+	@PostMapping("/pagos")
+	public ResponseEntity<Response> add(@RequestBody Pagos pagos) {
+		try {
+			this.service.save(pagos);
+			Response response = new Response(true, "Success!", pagos);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
 
-			} catch (Exception e) {
-				Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
-			}
+		} catch (Exception e) {
+			Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
 		}
-	
+	}
+
+	@PutMapping("/pagos")
+	public ResponseEntity<Response> update(@RequestBody Pagos pagos) {
+		try {
+			this.service.update(pagos);
+			Response response = new Response(true, "Success!", pagos);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
+
+		} catch (Exception e) {
+			Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
+		}
+	}
+
 }

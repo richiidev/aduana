@@ -16,5 +16,6 @@ public interface PagosRepo extends JpaRepository<Pagos, Serializable> {
 	public List<Pagos> findById(int id);
 	public List<Pagos> findByFactura(String factura);
 	public List<Pagos> findByRfc(String rfc);
+	public List<Pagos> findByAgente(String agente);
 	
 }

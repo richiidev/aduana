@@ -24,12 +24,18 @@ public class FacturaService {
 	public List<Facturas> getFacturaId(int id){
 		return this.repo.findById(id);
 	}
+	public List<Facturas> getPaginasFactura(int rango1,int rango2){
+		return this.repo.getPaginas(rango1, rango2);
+	}
 	
 	public List<Facturas> getFacturaFolio(String factura){
 		return this.repo.findByFactura(factura);
 	}
 	public List<Facturas> getFacturasRfc(String rfc){
 		return this.repo.findByRfc(rfc);
+	}
+	public List<Facturas> getFacturasByAgente(String agente){
+		return this.repo.findByAgente(agente);
 	}
 	
 	public void deleteById(int id) {

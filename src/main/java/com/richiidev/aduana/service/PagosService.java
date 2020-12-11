@@ -32,6 +32,9 @@ public class PagosService {
 	public List<Pagos> getPagosRfc(String rfc){
 		return this.repo.findByRfc(rfc);
 	}
+	public List<Pagos> getPagosAgente(String agente){
+		return this.repo.findByAgente(agente);
+	}
 	
 	public void deleteById(int id) {
 		this.repo.deleteById(id);
