@@ -51,7 +51,7 @@ public class UsuarioController {
 	@GetMapping("/usuario/rfc")
 	public ResponseEntity<Response> getByRFC(@RequestParam String rfc) {
 		try {
-			Object response = service.getUsuarioRFC(rfc);
+			Object response = service.getUsuarioConRFC(rfc);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);

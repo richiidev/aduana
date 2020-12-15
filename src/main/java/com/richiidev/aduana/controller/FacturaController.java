@@ -22,10 +22,13 @@ import io.swagger.annotations.Api;
 @RestController
 @Api(tags = "Factura")
 public class FacturaController {
-	
+
 	@Autowired
 	FacturaService service;
-	
+	UploadFileController archivos = new UploadFileController(); 
+	String urlServidorFacturas = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
+	String urlLocalFacturas = "/usr/share/tomcat/webapps/file/";
+
 	@GetMapping("/facturas")
 	public ResponseEntity<Response> getAll() {
 		try {
@@ -36,7 +39,7 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
+
 	@GetMapping("/facturas/id")
 	public ResponseEntity<Response> getByID(@RequestParam int id) {
 		try {
@@ -47,7 +50,7 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
+
 	@GetMapping("/facturas/factura")
 	public ResponseEntity<Response> getByFactura(@RequestParam String folio) {
 		try {
@@ -68,11 +71,47 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
+	@GetMapping("/facturas/fecha")
+	public ResponseEntity<Response> getFacturasByDate(@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = service.getPaginasByDate(rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	@DeleteMapping("/facturas/fecha")
+	public ResponseEntity<Response> deleteFacturasByDate(@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = service.getPaginasByDate(rango1, rango2);
+			this.service.deletePaginasByDate(rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+
 	@GetMapping("/facturas/rfc")
 	public ResponseEntity<Response> getByRfc(@RequestParam String rfc) {
 		try {
 			Object response = service.getFacturasRfc(rfc);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	@DeleteMapping("/facturas/folio")
+	public ResponseEntity<Response> deleteFacturaByFolio(@RequestParam String folio) {
+		try {
+			Object response = service.getFacturaFolio(folio);
+			archivos.borrarFile(urlServidorFacturas+folio+".pdf");
+			archivos.borrarFile(urlServidorFacturas+folio+".xml");
+			service.deleteFacturaByFolio(folio);
+
+
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
 
@@ -89,46 +128,46 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
-	
-	
-	
-		@DeleteMapping("/facturas/id")
-		public ResponseEntity<Response> deleteByID(@RequestParam("id") int id) {
-			try {
-				Object response = service.getFacturaId(id);
-				service.deleteById(id);
-				return new ResponseEntity<Response>(new Response(true, "Success Eliminado", response), HttpStatus.OK);
-			} catch (Exception e) {
 
-				return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
-			}
+
+
+	@DeleteMapping("/facturas/id")
+	public ResponseEntity<Response> deleteByID(@RequestParam("id") int id) {
+		try {
+			Object response = service.getFacturaId(id);
+			service.deleteById(id);
+			return new ResponseEntity<Response>(new Response(true, "Success Eliminado", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
-		
-		@PostMapping("/facturas")
-		public ResponseEntity<Response> add(@RequestBody Facturas facturas) {
-			try {
-				this.service.save(facturas);
-				Response response = new Response(true, "Success!", facturas);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
+	}
 
-			} catch (Exception e) {
-				Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
-			}
+	@PostMapping("/facturas")
+	public ResponseEntity<Response> add(@RequestBody Facturas facturas) {
+		try {
+			this.service.save(facturas);
+			Response response = new Response(true, "Success!", facturas);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
+
+		} catch (Exception e) {
+			Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
 		}
+	}
 
-		@PutMapping("/facturas")
-		public ResponseEntity<Response> update(@RequestBody Facturas facturas) {
-			try {
-				this.service.update(facturas);
-				Response response = new Response(true, "Success!", facturas);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
+	@PutMapping("/facturas")
+	public ResponseEntity<Response> update(@RequestBody Facturas facturas) {
+		try {
+			this.service.update(facturas);
+			Response response = new Response(true, "Success!", facturas);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
 
-			} catch (Exception e) {
-				Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
-				return new ResponseEntity<Response>(response, HttpStatus.OK);
-			}
+		} catch (Exception e) {
+			Response response = new Response(false, "Error!, ..." + e.getMessage(), null);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
 		}
-	
+	}
+
 
 }

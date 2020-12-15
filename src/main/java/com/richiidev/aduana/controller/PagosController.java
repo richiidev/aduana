@@ -25,6 +25,10 @@ public class PagosController {
 
 	@Autowired
 	PagosService service;
+	UploadFileController archivos = new UploadFileController(); 
+	String urlServidorFacturas = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
+	String urlLocalFacturas = "/usr/share/tomcat/webapps/file/";
+	
 
 	@GetMapping("/pagos")
 	public ResponseEntity<Response> getAll() {
@@ -56,6 +60,52 @@ public class PagosController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
+	@GetMapping("/pagos/paginas")
+	public ResponseEntity<Response> getByPaginas(@RequestParam int rango1,@RequestParam int rango2) {
+		try {
+			Object response = service.getPaginasPagos(rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	@GetMapping("/pagos/fecha")
+	public ResponseEntity<Response> getPagosByDate(@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = service.getPagosByDate(rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	@DeleteMapping("/pagos/fecha")
+	public ResponseEntity<Response> deletePagosByDate(@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = service.getPagosByDate(rango1, rango2);
+			service.deletePagosByDate(rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	@DeleteMapping("/pagos/folio")
+	public ResponseEntity<Response> deletePagoByFolio(@RequestParam String folio) {
+		try {
+			Object response = service.getPagosFolio(folio);
+			archivos.borrarFile(urlServidorFacturas+folio+".pdf");
+			archivos.borrarFile(urlServidorFacturas+folio+".xml");
+			service.deletePagosByFolio(folio);
+			
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	
 	@GetMapping("/pagos/rfc")
 	public ResponseEntity<Response> getByRfc(@RequestParam String rfc) {
 		try {

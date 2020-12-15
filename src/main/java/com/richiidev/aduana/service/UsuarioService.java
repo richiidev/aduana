@@ -28,6 +28,9 @@ public class UsuarioService {
 	public List<Usuario> getUserId(int id){
 		return this.repo.findById(id);
 	}
+	public List<Usuario> getUsuarioConRFC(String rfc){
+		return this.repo.findByRfc(rfc);
+	}
 	
 	public List<RFC> getUsuarioRFC(String rfc){
 		 return this.repoRfc.getUserRFC(rfc);

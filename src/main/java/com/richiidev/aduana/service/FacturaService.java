@@ -27,6 +27,9 @@ public class FacturaService {
 	public List<Facturas> getPaginasFactura(int rango1,int rango2){
 		return this.repo.getPaginas(rango1, rango2);
 	}
+	public List<Facturas> getPaginasByDate(String rango1,String rango2){
+		return this.repo.getFacturasByDate(rango1, rango2);
+	}
 	
 	public List<Facturas> getFacturaFolio(String factura){
 		return this.repo.findByFactura(factura);
@@ -41,6 +44,9 @@ public class FacturaService {
 	public void deleteById(int id) {
 		this.repo.deleteById(id);
 	}
+	public void deleteFacturaByFolio(String folio) {
+		this.repo.deleteFolio(folio);
+	}
 	
 	public void save(Facturas factura) {
 		this.repo.save(factura);
@@ -48,5 +54,8 @@ public class FacturaService {
 	
 	public void update(Facturas factura) {
 		this.repo.save(factura);
+	}
+	public void deletePaginasByDate(String rango1,String rango2){
+		this.repo.deleteByDate(rango1, rango2);
 	}
 }
