@@ -80,6 +80,7 @@ public class PagosController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
+	
 	@DeleteMapping("/pagos/fecha")
 	public ResponseEntity<Response> deletePagosByDate(@RequestParam String rango1,@RequestParam String rango2) {
 		try {
