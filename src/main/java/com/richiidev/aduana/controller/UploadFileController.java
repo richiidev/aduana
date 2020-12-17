@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -84,7 +85,7 @@ public class UploadFileController {
 	    }
        
 	    @PostMapping("zip")
-	    public String convertirZip(@RequestParam String zipFile,@RequestParam String[] srcFiles) {
+	    public String convertirZip(@RequestParam String zipFile,@RequestBody String[] srcFiles) {
 	    	try {
 	             
 	            // create byte buffer
@@ -120,12 +121,13 @@ public class UploadFileController {
 	 
 	            // close the ZipOutputStream
 	            zos.close();
+	            
+	            return "zip creado en la ruta: "+ zipFile ;
 	             
 	        }
 	        catch (IOException ioe) {
-	            System.out.println("Error creating zip file: " + ioe);
+	            return "ERROR: "+ioe ;
 	        }
-	    	return "zip creado";
 	    }
         
          
