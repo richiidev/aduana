@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadFileService {
 
-	 private String upload_folder = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
+	 private String upload_folder = ".//src//main//webapp//file//";
 
 	    public void saveFile(MultipartFile file) throws IOException {
 	        if(!file.isEmpty()){ 

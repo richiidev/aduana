@@ -28,6 +28,7 @@ public class FacturaService {
 		return this.repo.getPaginas(rango1, rango2);
 	}
 	public List<Facturas> getPaginasByDate(String rango1,String rango2){
+		System.out.println(this.repo.getFacturasByDate(rango1, rango2));
 		return this.repo.getFacturasByDate(rango1, rango2);
 	}
 	

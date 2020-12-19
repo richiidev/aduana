@@ -1,5 +1,7 @@
 package com.richiidev.aduana.controller;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.richiidev.aduana.model.Facturas;
 import com.richiidev.aduana.pojo.Response;
+import com.richiidev.aduana.service.DatabaseServiceImpl;
 import com.richiidev.aduana.service.FacturaService;
 
 import io.swagger.annotations.Api;
@@ -25,6 +28,10 @@ public class FacturaController {
 
 	@Autowired
 	FacturaService service;
+	Connection databaseConnection;
+	String query = "";
+	DatabaseServiceImpl databaseServiceImpl = new DatabaseServiceImpl();
+	
 	UploadFileController archivos = new UploadFileController(); 
 	String urlServidorFacturas = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
 	String urlLocalFacturas = "/usr/share/tomcat/webapps/file/";
@@ -74,6 +81,7 @@ public class FacturaController {
 	@GetMapping("/facturas/fecha")
 	public ResponseEntity<Response> getFacturasByDate(@RequestParam String rango1,@RequestParam String rango2) {
 		try {
+			
 			Object response = service.getPaginasByDate(rango1, rango2);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
 		} catch (Exception e) {
@@ -81,9 +89,16 @@ public class FacturaController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
+	
 	@DeleteMapping("/facturas/fecha")
 	public ResponseEntity<Response> deleteFacturasByDate(@RequestParam String rango1,@RequestParam String rango2) {
+		
 		try {
+			query ="select * from factura";
+			ResultSet resultSet = databaseServiceImpl.getResultSet(databaseConnection, query);
+			
+			System.out.println(resultSet);
+			System.out.println(service.getPaginasByDate(rango1, rango2));
 			Object response = service.getPaginasByDate(rango1, rango2);
 			this.service.deletePaginasByDate(rango1, rango2);
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
