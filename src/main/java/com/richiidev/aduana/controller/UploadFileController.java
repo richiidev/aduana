@@ -79,7 +79,7 @@ public class UploadFileController {
 	@GetMapping("borrarArchivo")
 	public ResponseEntity<Response> borrarFile(@RequestParam String url){
 		try {
-			File fichero = new File(url);
+			File fichero = new File(urlProyecto+url);
 			if (fichero.delete())
 				return new ResponseEntity<Response>(new Response(true, "Success", "El fichero ha sido borrado satisfactoriamente"), HttpStatus.OK);	
 			else
@@ -92,7 +92,7 @@ public class UploadFileController {
 	}
 
 	
-	@PostMapping("zip")
+	@PostMapping("crearZip")
 	public ResponseEntity<Response> crearZip(@RequestParam String zipFile,@RequestBody String[] srcFiles ) {  
 		try {
 			// create byte buffer
