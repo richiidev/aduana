@@ -92,7 +92,7 @@ public class UploadFileController {
 	}
 
 	
-	@PostMapping("crearZip")
+	@PostMapping("zip")
 	public ResponseEntity<Response> crearZip(@RequestParam String zipFile,@RequestBody String[] srcFiles ) {  
 		try {
 			// create byte buffer

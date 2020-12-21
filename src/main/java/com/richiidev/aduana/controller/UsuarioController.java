@@ -57,6 +57,15 @@ public class UsuarioController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}
 	}
+	@GetMapping("/usuario/correo")
+	public ResponseEntity<Response> getByCorreo(@RequestParam String correo) {
+		try {
+			Object response = service.getUsuarioCorreo(correo);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
 
 	@GetMapping("/usuario/rfcValidacion")
 	public ResponseEntity<Response> getByRFCExiste(@RequestParam String rfc) {

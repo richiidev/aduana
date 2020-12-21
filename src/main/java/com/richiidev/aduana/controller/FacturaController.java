@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.richiidev.aduana.model.Facturas;
 import com.richiidev.aduana.pojo.Response;
-import com.richiidev.aduana.service.DatabaseServiceImpl;
 import com.richiidev.aduana.service.FacturaService;
 
 import io.swagger.annotations.Api;
@@ -30,7 +29,6 @@ public class FacturaController {
 	FacturaService service;
 	Connection databaseConnection;
 	String query = "";
-	DatabaseServiceImpl databaseServiceImpl = new DatabaseServiceImpl();
 	
 	UploadFileController archivos = new UploadFileController(); 
 	String urlServidorFacturas = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
@@ -94,10 +92,7 @@ public class FacturaController {
 	public ResponseEntity<Response> deleteFacturasByDate(@RequestParam String rango1,@RequestParam String rango2) {
 		
 		try {
-			query ="select * from factura";
-			ResultSet resultSet = databaseServiceImpl.getResultSet(databaseConnection, query);
 			
-			System.out.println(resultSet);
 			System.out.println(service.getPaginasByDate(rango1, rango2));
 			Object response = service.getPaginasByDate(rango1, rango2);
 			this.service.deletePaginasByDate(rango1, rango2);

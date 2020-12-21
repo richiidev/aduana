@@ -18,6 +18,8 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Serializable> {
 	public List<Usuario> findAll();
 	public List<Usuario> findById(int id);
 	public List<Usuario> findByRfc(String rfc);
+	public List<Usuario> findByCorreo(String correo);
+
 	
 	@Query(value = "Select * from usuario where rfc = ? and password = ?;", 
 			nativeQuery = true) List<Usuario> getUserpasswordRFC(String rfc, String password);

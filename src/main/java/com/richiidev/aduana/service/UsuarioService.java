@@ -31,6 +31,9 @@ public class UsuarioService {
 	public List<Usuario> getUsuarioConRFC(String rfc){
 		return this.repo.findByRfc(rfc);
 	}
+	public List<Usuario> getUsuarioCorreo(String correo){
+		return this.repo.findByCorreo(correo);
+	}
 	
 	public List<RFC> getUsuarioRFC(String rfc){
 		 return this.repoRfc.getUserRFC(rfc);
