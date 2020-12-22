@@ -28,6 +28,7 @@ public class PagosController {
 	UploadFileController archivos = new UploadFileController(); 
 	String urlServidorFacturas = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
 	String urlLocalFacturas = "/usr/share/tomcat/webapps/file/";
+	String urlProyecto = ".//src//main//webapp//file//";
 	
 
 	@GetMapping("/pagos")
@@ -96,8 +97,8 @@ public class PagosController {
 	public ResponseEntity<Response> deletePagoByFolio(@RequestParam String folio) {
 		try {
 			Object response = service.getPagosFolio(folio);
-			archivos.borrarFile(urlServidorFacturas+folio+".pdf");
-			archivos.borrarFile(urlServidorFacturas+folio+".xml");
+			archivos.borrarFile(urlProyecto+folio+".pdf");
+			archivos.borrarFile(urlProyecto+folio+".xml");
 			service.deletePagosByFolio(folio);
 			
 			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);

@@ -1,23 +1,22 @@
 package com.richiidev.aduana.controller;
 
+import java.io.Console;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,7 +78,7 @@ public class UploadFileController {
 	@GetMapping("borrarArchivo")
 	public ResponseEntity<Response> borrarFile(@RequestParam String url){
 		try {
-			File fichero = new File(urlProyecto+url);
+			File fichero = new File(urlServidorFacturas+url);
 			if (fichero.delete())
 				return new ResponseEntity<Response>(new Response(true, "Success", "El fichero ha sido borrado satisfactoriamente"), HttpStatus.OK);	
 			else
@@ -90,20 +89,60 @@ public class UploadFileController {
 			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
 		}  	
 	}
+	@PostMapping("borrarMultiplesArchivos")
+	public ResponseEntity<Response> borrarMultiplesArchivos(@RequestBody String[] archivo){
+		try {
+			String[]entries = archivo;
+			for(String s: entries){
+			       File currentFile = new File(""+urlProyecto,s);
+			       currentFile.delete();	
+			}			
+			return new ResponseEntity<Response>(new Response(true, "Success", "El fichero ha sido borrado satisfactoriamente"), HttpStatus.OK);	
 
-	
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}  	
+	}
+
+	@GetMapping("borrarTodosLosZip")
+	public ResponseEntity<Response> borrarArchivos(){
+		try {
+
+			File[] archivos = new File(urlProyecto).listFiles(new FileFilter() {
+				public boolean accept(File archivo) {
+
+					if (archivo.isFile())
+
+						return archivo.getName().endsWith(".zip" );
+					return false;
+				}
+			});
+			for (File archivo : archivos)
+				archivo.delete();
+			return new ResponseEntity<Response>(new Response(true, "Success", "Los archivos .zip se borraron satisfactoriamente"), HttpStatus.OK);	
+
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}  	
+	}
+
+
 	@PostMapping("crearZip")
 	public ResponseEntity<Response> crearZip(@RequestParam String zipFile,@RequestBody String[] srcFiles ) {  
 		try {
 			// create byte buffer
 			byte[] buffer = new byte[1024];
 
-			
+
 			FileOutputStream fos = new FileOutputStream(urlProyecto+zipFile+".zip");
 
 
 			ZipOutputStream zos = new ZipOutputStream(fos);
-			
+
 			for (int i=0; i < srcFiles.length; i++) {
 
 				File srcFile = new File(srcFiles[i]);

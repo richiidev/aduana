@@ -1,11 +1,6 @@
 package com.richiidev.aduana.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
-import java.sql.ResultSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,12 +27,12 @@ public class FacturaController {
 
 	@Autowired
 	FacturaService service;
-	Connection databaseConnection;
-	String query = "";
+	
 
 	UploadFileController archivos = new UploadFileController(); 
 	String urlServidorFacturas = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\file\\";
 	String urlLocalFacturas = "/usr/share/tomcat/webapps/file/";
+	String urlProyecto = ".//src//main//webapp//file//";
 
 
 
@@ -124,8 +119,8 @@ public class FacturaController {
 	public ResponseEntity<Response> deleteFacturaByFolio(@RequestParam String folio) {
 		try {
 			Object response = service.getFacturaFolio(folio);
-			archivos.borrarFile(urlServidorFacturas+folio+".pdf");
-			archivos.borrarFile(urlServidorFacturas+folio+".xml");
+			archivos.borrarFile(urlProyecto+folio+".pdf");
+			archivos.borrarFile(urlProyecto+folio+".xml");
 			service.deleteFacturaByFolio(folio);
 
 
