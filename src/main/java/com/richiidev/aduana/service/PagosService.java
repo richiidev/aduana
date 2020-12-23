@@ -32,6 +32,12 @@ public class PagosService {
 	public List<Pagos> getPagosByDate(String rango1,String rango2){
 		return this.repo.getPagosByDate(rango1, rango2);
 	}
+	public List<Pagos> getPagosByDateRfc(String rfc, String rango1,String rango2){
+		return this.repo.getPagosByDateAndRfc(rfc, rango1, rango2);
+	}
+	public List<Pagos> getPagosByDateAgente(String agente, String rango1,String rango2){
+		return this.repo.getPagosByDateAndAgente(agente, rango1, rango2);
+	}
 	public List<Pagos> getPagosFolio(String factura){
 		return this.repo.findByFactura(factura);
 	}

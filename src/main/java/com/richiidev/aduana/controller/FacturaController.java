@@ -105,6 +105,28 @@ public class FacturaController {
 		}
 	}
 
+	@GetMapping("/facturas/fecha/rfc")
+	public ResponseEntity<Response> getFacturasByDateRfc(@RequestParam String rfc,@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = this.service.getPaginasByDateRfc(rfc, rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/facturas/fecha/agente")
+	public ResponseEntity<Response> getFacturasByDateAgente(@RequestParam String agente,@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = this.service.getPaginasByDateAgente(agente, rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+
 	@GetMapping("/facturas/rfc")
 	public ResponseEntity<Response> getByRfc(@RequestParam String rfc) {
 		try {

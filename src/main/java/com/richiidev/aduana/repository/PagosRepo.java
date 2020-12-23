@@ -30,6 +30,11 @@ public interface PagosRepo extends JpaRepository<Pagos, Serializable> {
 	@Query(value = "select * from pagos where fecha >= ? and fecha <= ?;", 
 			nativeQuery = true) List<Pagos> getPagosByDate(String rango1,String rango2);
 	
+	@Query(value = "select * from pagos where rfc = ? fecha >= ? and fecha <= ?;", 
+			nativeQuery = true) List<Pagos> getPagosByDateAndRfc(String rfc, String rango1,String rango2);
+	
+	@Query(value = "select * from pagos where agente = ? fecha >= ? and fecha <= ?;", 
+			nativeQuery = true) List<Pagos> getPagosByDateAndAgente(String agente, String rango1,String rango2);
 	
 	@Modifying
 	@Transactional
@@ -38,8 +43,8 @@ public interface PagosRepo extends JpaRepository<Pagos, Serializable> {
 	
 	@Modifying
 	@Transactional
-	@Query(value = "delete  from pagos where where fecha >= :rango1 and fecha <= :rango2;", 
-			nativeQuery = true) void deleteByDate(@Param("rango1") String rango1,@Param("rango2") String rango2);
+	@Query(value = "delete  from pagos where  fecha >= ? and fecha <= ?;", 
+			nativeQuery = true) void deleteByDate(String rango1,String rango2);
 	
 	
 }

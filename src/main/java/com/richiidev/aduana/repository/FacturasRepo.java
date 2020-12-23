@@ -30,6 +30,12 @@ public interface FacturasRepo extends JpaRepository<Facturas, Serializable> {
 	@Query(value = "select * from factura where fecha >= ? and fecha <= ?", 
 			nativeQuery = true) List<Facturas> getFacturasByDate(String rango1,String rango2);
 	
+	@Query(value = "select * from factura where rfc = ? and fecha >= ? and fecha <= ?", 
+			nativeQuery = true) List<Facturas> getFacturasByDateAndRfc(String rfc,String rango1,String rango2);
+	
+	@Query(value = "select * from factura where agente = ? and fecha >= ? and fecha <= ?", 
+			nativeQuery = true) List<Facturas> getFacturasByDateAndAgente(String agente,String rango1,String rango2);
+	
 	@Modifying
 	@Transactional
 	@Query(value = "delete from factura where factura = :folio ;", 
@@ -37,6 +43,6 @@ public interface FacturasRepo extends JpaRepository<Facturas, Serializable> {
 	
 	@Modifying
 	@Transactional
-	@Query(value = "delete  from factura where where fecha >= :rango1 and fecha <= :rango2;", 
-			nativeQuery = true) void deleteByDate(@Param("rango1") String rango1,@Param("rango2") String rango2);
+	@Query(value = "delete  from factura where fecha >= ? and fecha <= ?;", 
+			nativeQuery = true) void deleteByDate(String rango1,String rango2);
 }

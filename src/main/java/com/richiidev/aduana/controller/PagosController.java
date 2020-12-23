@@ -82,6 +82,28 @@ public class PagosController {
 		}
 	}
 	
+	@GetMapping("/pagos/fecha/rfc")
+	public ResponseEntity<Response> getPagosByDateRfc(@RequestParam String rfc,@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = service.getPagosByDateRfc(rfc, rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/pagos/fecha/agente")
+	public ResponseEntity<Response> getPagosByDateAgente(@RequestParam String agente,@RequestParam String rango1,@RequestParam String rango2) {
+		try {
+			Object response = service.getPagosByDateAgente(agente, rango1, rango2);
+			return new ResponseEntity<Response>(new Response(true, "Success", response), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<Response>(new Response(false, "Error " + e.getMessage(), null), HttpStatus.OK);
+		}
+	}
+	
 	@DeleteMapping("/pagos/fecha")
 	public ResponseEntity<Response> deletePagosByDate(@RequestParam String rango1,@RequestParam String rango2) {
 		try {

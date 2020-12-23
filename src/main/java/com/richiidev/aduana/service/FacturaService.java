@@ -15,12 +15,12 @@ public class FacturaService {
 
 	@Autowired
 	FacturasRepo repo;
-	
+
 
 	public List<Facturas> getAll(){
 		return this.repo.findAll();
 	}
-	
+
 	public List<Facturas> getFacturaId(int id){
 		return this.repo.findById(id);
 	}
@@ -31,7 +31,14 @@ public class FacturaService {
 		System.out.println(this.repo.getFacturasByDate(rango1, rango2));
 		return this.repo.getFacturasByDate(rango1, rango2);
 	}
-	
+	public List<Facturas> getPaginasByDateRfc(String rfc, String rango1,String rango2){
+
+		return this.repo.getFacturasByDateAndRfc(rfc, rango1, rango2);
+	}
+	public List<Facturas> getPaginasByDateAgente(String agente, String rango1,String rango2){
+
+		return this.repo.getFacturasByDateAndAgente(agente, rango1, rango2);
+	}
 	public List<Facturas> getFacturaFolio(String factura){
 		return this.repo.findByFactura(factura);
 	}
@@ -41,18 +48,18 @@ public class FacturaService {
 	public List<Facturas> getFacturasByAgente(String agente){
 		return this.repo.findByAgente(agente);
 	}
-	
+
 	public void deleteById(int id) {
 		this.repo.deleteById(id);
 	}
 	public void deleteFacturaByFolio(String folio) {
 		this.repo.deleteFolio(folio);
 	}
-	
+
 	public void save(Facturas factura) {
 		this.repo.save(factura);
 	}
-	
+
 	public void update(Facturas factura) {
 		this.repo.save(factura);
 	}

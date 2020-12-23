@@ -1,13 +1,9 @@
 package com.richiidev.aduana.controller;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -56,7 +52,7 @@ public class UploadFileController {
 		}
 	}
 
-	@GetMapping("descarga")
+	/*@GetMapping("descarga")
 	public ResponseEntity<Response> descargarArchivo(@RequestParam String archivo,@RequestParam String ubicacion ) throws IOException{
 		System.out.println("opening connection");
 		URL url = new URL(archivo);
@@ -73,12 +69,12 @@ public class UploadFileController {
 		in.close();
 		System.out.println("File downloaded");
 		return new ResponseEntity<Response>(new Response(true, "Success", "File downloaded"), HttpStatus.OK);							 
-	}
+	}*/
 
 	@GetMapping("borrarArchivo")
 	public ResponseEntity<Response> borrarFile(@RequestParam String url){
 		try {
-			File fichero = new File(urlServidorFacturas+url);
+			File fichero = new File(urlProyecto+url);
 			if (fichero.delete())
 				return new ResponseEntity<Response>(new Response(true, "Success", "El fichero ha sido borrado satisfactoriamente"), HttpStatus.OK);	
 			else
